@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -11,6 +12,8 @@ namespace Try_ADO_2
 {
     internal class Program
     {
+
+        public static SqlConnection con;
         static void Main(string[] args)
         {
 
@@ -58,22 +61,55 @@ namespace Try_ADO_2
             //{
 
 
-            string connectionString = 
+            string connectionString =
                 "Server=tcp:(localdb)\\MSSQLLocalDB.database.windows.net,1433;" +
             "Database=try-db-2;User ID=YOUR_LOGIN_NAME_HERE;" +
             "Encrypt=False;" +
             "TrustServerCertificate=False;Connection Timeout=30;";
             //            string connectionString2 = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
-            string connectionString2 = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
+            string connectionString2 = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=try-db-2;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
 
-            SqlConnection con = new SqlConnection(connectionString2);
+            con = new SqlConnection(connectionString2);
             con.Open();
             Console.WriteLine("Connected successfully.");
 
+            Console.WriteLine("State = " + con.State);
+
+            PrintCars();
+
+
             Console.WriteLine("Press any key to finish...");
-            Console.ReadKey(true);
+            con.Close();
+            //Console.ReadKey(true);
 
         }
+
+        public static void PrintCars()
+        {
+            ////assuming that connection is open
+
+            //SqlCommand command2 = new SqlCommand("SELECT * FROM Cars;",con);
+            string query = "SELECT * FROM cars;";
+            SqlCommand command = new SqlCommand(query, con);
+
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("{0}\t{1}", reader.GetInt32(0),
+                        reader.GetString(1));
+                }
+            }
+            else
+            {
+                Console.WriteLine("No rows found.");
+            }
+            reader.Close();
+        }
+
     }
 }
