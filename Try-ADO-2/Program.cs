@@ -22,7 +22,8 @@ namespace Try_ADO_2
 {
     internal class Program
     {
-
+        //create tables 
+        //https://stackoverflow.com/questions/1348712/creating-a-sql-server-table-from-a-c-sharp-datatable
         public static SqlConnection con;
         static void Main(string[] args)
         {
