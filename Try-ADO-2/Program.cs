@@ -29,7 +29,16 @@ namespace Try_ADO_2
         {
 
             Console.WriteLine("???");
-            TryConnect3();
+
+            try
+            {
+                TryConnect3();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Some excepiotn: \n" + ex.Message);
+            }
 
             //string connectionString = "data source=RS-ADMIN;initial catalog=Office;integrated security=true\"\r\n";
 
@@ -72,15 +81,15 @@ namespace Try_ADO_2
             //{
 
 
-            string connectionString =
-                "Server=tcp:(localdb)\\MSSQLLocalDB.database.windows.net,1433;" +
-            "Database=try-db-2;User ID=YOUR_LOGIN_NAME_HERE;" +
-            "Encrypt=False;" +
-            "TrustServerCertificate=False;Connection Timeout=30;";
+            //string connectionString =
+            //    "Server=tcp:(localdb)\\MSSQLLocalDB.database.windows.net,1433;" +
+            //"Database=try-db-2;User ID=YOUR_LOGIN_NAME_HERE;" +
+            //"Encrypt=False;" +
+            //"TrustServerCertificate=False;Connection Timeout=30;";
             //            string connectionString2 = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
             string connectionString2 = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=try-db-2;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
-
+            //string connectionString2 = "generate exception";
             con = new SqlConnection(connectionString2);
             con.Open();
             Console.WriteLine("Connected successfully.");
@@ -124,6 +133,9 @@ namespace Try_ADO_2
             reader.Close();
         }
 
+        //update values
+        //https://learn.microsoft.com/en-us/visualstudio/data-tools/insert-new-records-into-a-database?view=vs-2022&tabs=csharp
+        //https://stackoverflow.com/questions/13573380/inserting-values-into-a-sql-server-database-using-ado-net-via-c-sharp
         public static void CreateCarRow(int id, string carName,
             string carBrand)
         {
